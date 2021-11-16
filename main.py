@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from pie_bar import pie_expand
 import json
 
-# %%
+
 def separate_data(data, classification):
     if len(data) == 0:
         return None
@@ -15,7 +15,7 @@ def separate_data(data, classification):
     data = data[data['classification'] != 'TRANSFER CREDIT']
 
     others = data.copy()
-
+    classified_data = {}
     for k,v in classification.items():
         classified_data[k] = others[others['name'].apply(lambda x: np.any([g.lower() in x.lower() for g in v]))]
         others = others[others['name'].apply(lambda x: np.all([g.lower() not in x.lower() for g in v]))]
@@ -122,17 +122,18 @@ if __name__ == '__main__':
         classified_data, others, transfer_credit = separate_data(ago, classification)
         classified_data['unaccounted'] = others
 
-        
-        # colors = [plt.cm.get_cmap('hsv', (len(classified_data)))(i) for i in range(len(classified_data))]
-        colors = list(mcd.XKCD_COLORS.values())[:len(colors)] #xkcd colors is acutally pretty nice
-
-        colors = dict(zip(classified_data.keys(), colors))
 
         classified_data_summary = {}
         for k,v in classified_data.items():
             if len(v) > 0:
                 classified_data_summary[k] = np.abs(v.amount.sum())
 
+        # get the colors for the plots so that the color can be nice and consistent
+        # colors = [plt.cm.get_cmap('hsv', (len(classified_data_summary)))(i) for i in range(len(classified_data_summary))]
+        colors = list(mcd.XKCD_COLORS.values())[:len(classification) + 2] #xkcd colors is acutally pretty nice
+
+        colors = dict(zip(list(classification.keys()) + ['others', 'unaccounted'], colors))
+        
         groupby_category_pie(classified_data_summary, colors, './figures/pie cat {}.jpg'.format(d.strftime('%b-%Y')))
         groupby_weekdays(ago, './figures/weekdays {}.jpg'.format(d.strftime('%b-%Y')))
 
