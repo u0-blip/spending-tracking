@@ -1,0 +1,12 @@
+
+{
+    "grocery" : ["coles", "aldi", "woolworth"],
+    "transportation" : ["uber", "myki", "didi"],
+    "lifestyle" : ["amazon", "ebay", "kmart", "paypal", "afterpay", "pet", "amzn", "bunnings"],
+    "food" : ["mcdonalds", "dominos", "pizza hut", "subway", "kfc", "grilld", "DINING"],
+    "going_out" : ["bar", "pub", "cafe", "restaurant", "food", "dumplings", "burges", "COFFEE"],
+    "alcohol" : ["LIQUORLAND"],
+    "investment" : ["self wealth"], 
+    "health" : ["CHEMIST WAREHOUSE", "SPECSAVERS", "NENI"],
+    "gambling": ["LADBROKES"]
+}
